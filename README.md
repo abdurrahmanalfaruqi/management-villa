@@ -5,43 +5,42 @@ This project focuses on clean architecture, server actions, and robust booking v
 
 Features
 Villa Management (CRUD)
-Create, update, delete villa data
+Create, update, and delete villa data
 Fields:
 Name
 Location
 Price
 Capacity
 Inline editing support in table view
-Auto UI refresh using revalidatePath
-
+Automatic UI refresh using revalidatePath
 Booking System
 Create reservations per villa
-Select check-in & check-out dates
+Select check-in and check-out dates
 Prevent overlapping bookings (core business logic)
-Validate invalid date ranges
-
+Validate invalid date ranges (check-out must be after check-in)
 Business Logic
 Server-side validation using Zod
-Booking conflict detection (date range overlap)
+Booking conflict detection using date range overlap
 Strong type safety using TypeScript
-
 Architecture Overview
 
-This project follows a layered architecture approach to separate concerns:
+This project follows a layered architecture to ensure clear separation of concerns:
 
 app/
   actions/        → Server Actions (mutation layer)
-services/         → Business logic + Prisma queries
-lib/              → Prisma client instance
-components/       → UI components (forms, tables)
-🔹 Key Design Principles
-Separation of Concerns
-UI (components)
-Business Logic (services)
-Data Access (Prisma)
-Server Actions instead of REST API
-Reusable service layer for database operations
 
+services/         → Business logic + Prisma queries
+
+lib/              → Prisma client instance
+
+components/       → UI components (forms, tables)
+Key Design Principles
+Separation of concerns:
+UI → Components
+Business Logic → Services
+Data Access → Prisma layer
+Server Actions instead of REST APIs
+Reusable service layer for database operations
 Installation & Setup
 1. Clone Repository
 git clone https://github.com/your-username/villa-booking.git
@@ -50,26 +49,23 @@ cd villa-booking
 npm install
 3. Setup Environment Variables
 
-Create .env file:
+Create a .env file:
 
 DATABASE_URL="postgresql://user:password@localhost:5432/villa_db"
-
-Prisma Migration Setup
-1. Generate Prisma Client
+Prisma Setup
+Generate Prisma Client
 npx prisma generate
-2. Run Migration
+Run Database Migration
 npx prisma migrate dev
-3. (Optional) Seed Database
+Optional: Seed Database
 npx prisma db seed
-
 Running the Application
 Development Mode
 npm run dev
 
-Application will run at:
+The application will run at:
 
 http://localhost:3000
-
 Folder Structure
 app/
   dashboard/
@@ -88,44 +84,41 @@ lib/
 components/
   villa/
   booking/
-
 Booking Validation Logic
 
-The system ensures no overlapping bookings using this rule:
+The system prevents overlapping bookings using the following rule:
 
 A booking is rejected if:
 
-Existing check-in < new check-out
-AND existing check-out > new check-in
+Existing check-in < New check-out
+AND Existing check-out > New check-in
 
-This guarantees:
+This ensures:
 
 No double booking
 Data consistency
 Reliable reservation system
+Commit Convention
 
-Commit Convention (Important)
-
-Commit history follows descriptive patterns:
+Commit messages follow a simple and consistent pattern:
 
 feat: add villa CRUD functionality
-fix: resolve booking overlap validation bug
-refactor: extract prisma logic to service layer
-ui: improve villa table layout
-
+feat: implement booking system with overlap validation
+fix: prevent overlapping booking dates
+refactor: improve service layer structure
+ui: enhance table layout and pagination
 Notes
-Built with production-level structure mindset
-Scalable for multi-villa booking system
-Ready for future features:
+Built with production-level architecture mindset
+Scalable for multi-villa booking systems
+Ready for extension:
 Authentication
 Payment integration
 Role-based access (admin/user)
-
 Author
 
 Developed as a technical assessment project demonstrating:
 
 Full-stack Next.js architecture
-Booking system design
-Clean code practices
+Real-world booking system design
+Clean code principles
 Server-side validation strategy
